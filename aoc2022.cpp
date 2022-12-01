@@ -2,6 +2,9 @@
 
 using namespace std;
 
+extern void day_test(span<string> args);
+extern void day1(span<string> args);
+
 static function<void(span<string>)> days[] = {
     day_test,
     day1,
@@ -11,9 +14,7 @@ static function<void(span<string>)> days[] = {
 int main(int argc, const char *argv[])
 {
     vector<string> arguments(argv + min(2, argc), argv + argc);
-    int day = clamp((argc > 1) ? atoi(argv[1]) : 0, 0, (int)size(days) - 1);
-
-    // cout << "day " << day << " with " << arguments.size() << " parameters" << endl;
+    int day = clamp((argc > 1) ? atoi(argv[1]) : 0, (int)size(days) - 2, (int)size(days) - 1);
 
     days[day](arguments);
 }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void day_test(span<string> args)
+extern void day_test(span<string> args)
 {
 	ostringstream ss;
 	copy(args.begin(), args.end(), ostream_iterator<string>(ss, " "));

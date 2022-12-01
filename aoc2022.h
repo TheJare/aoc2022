@@ -11,6 +11,7 @@
 #include <functional>
 #include <cstddef>
 #include <format>
+#include <numeric>
 
 // aliases & stuff
 
@@ -19,5 +20,7 @@ namespace rv = std::ranges::views;
 
 // My stuff
 
-extern void day_test(std::span<std::string> args);
-extern void day1(std::span<std::string> args);
+inline bool is_emptyorws(std::string const &str)
+{
+    return str.find_first_not_of(" \r\n\t\v\f") == std::string::npos;
+}

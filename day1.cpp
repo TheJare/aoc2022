@@ -2,16 +2,26 @@
 
 using namespace std;
 
-void day1(span<string> args)
+extern void day1(span<string> args)
 {
-    auto fn = args.empty() ? "data/input.txt" : args[0].c_str();
+    auto fn = args.empty() ? "data/day1.txt" : args[0].c_str();
     ifstream f(fn);
-    size_t m = 0;
-    while (f)
+    string line;
+    int maxv[] = {0, 0, 0, 0};
+    int acc = 0;
+    while (getline(f, line))
     {
-        string k;
-        f >> k;
-        m = max(k.size(), m);
+        if (is_emptyorws(line))
+        {
+            maxv[0] = acc;
+            acc = 0;
+            rs::sort(maxv);
+        }
+        else
+        {
+            acc += atoi(line.c_str());
+        }
     }
-    cout << "max token is " << m;
+    cout << "max calories is " << maxv[3] << endl;
+    cout << "max 3 calories is " << reduce(maxv + 1, maxv + 4) << endl;
 }
