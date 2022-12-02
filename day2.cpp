@@ -15,7 +15,8 @@ static void day2_1(span<string> args)
             break;
         int cval = computer[0] - 'A';
         int mval = me[0] - 'X';
-        int score = (((mval - cval) + 4) % 3) * 3 + mval + 1;
+        int rval = (mval - cval + 4) % 3;
+        int score = rval * 3 + mval + 1;
         acc += score;
     }
     cout << "round 1 score is " << acc << endl;
