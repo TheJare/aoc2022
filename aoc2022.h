@@ -12,6 +12,7 @@
 #include <cstddef>
 #include <format>
 #include <numeric>
+#include <cctype>
 
 // aliases & stuff
 
