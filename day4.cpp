@@ -37,7 +37,7 @@ static void part2(span<string> args)
         char c;
         istringstream il(line);
         il >> a0 >> c >> a1 >> c >> b0 >> c >> b1;
-        acc += !(a0 > b1 || a1 < b0);
+        acc += a0 <= b1 && a1 >= b0;
     }
     cout << "round 2 score is " << acc << endl;
 }
