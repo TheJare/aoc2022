@@ -26,8 +26,7 @@ static void part(span<string> args, int part)
                 }
                 if (isalpha(line[i]))
                 {
-                    auto &stack = stacks[j];
-                    stack.push_back(line[i]);
+                    stacks[j].push_back(line[i]);
                 }
             }
         }
