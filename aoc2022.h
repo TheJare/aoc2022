@@ -15,6 +15,7 @@
 #include <format>
 #include <numeric>
 #include <cctype>
+#include <iterator>
 
 // aliases & stuff
 
