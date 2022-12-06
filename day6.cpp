@@ -6,7 +6,7 @@ static void part(span<string> args, int part)
 {
     auto fn = args.empty() ? "data/day6.txt" : args[0].c_str();
     ifstream f(fn);
-    std::string line(std::istreambuf_iterator<char>{f}, {});
+    string line(istreambuf_iterator<char>{f}, {});
 
     int size = (part == 1) ? 4 : 14;
 
