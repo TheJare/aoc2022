@@ -5,12 +5,8 @@ using namespace std;
 static size_t recur1(ifstream &f, size_t &total, vector<size_t> &sizes)
 {
     size_t acc = 0;
-    for (string line; getline(f, line);)
+    for (string line; getline(f, line) && line != "$ cd ..";)
     {
-        if (line == "$ cd ..")
-        {
-            break;
-        }
         if (isdigit(line[0]))
         {
             acc += atoi(line.c_str());
