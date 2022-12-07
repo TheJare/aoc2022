@@ -10,19 +10,22 @@ static void part(span<string> args, int part)
 
     int size = (part == 1) ? 4 : 14;
 
-    int i;
-    bool found = false;
-    for (i = size; !found && i < line.length(); ++i)
+    auto check_unique = [&line, size](int &i)
     {
-        found = true;
-        for (int j = 0; found && j < size - 1; j++)
-            for (int k = j + 1; found && k < size; k++)
+        for (int j = 0; j < size - 1; j++)
+            for (int k = j + 1; k < size; k++)
                 if (line[i - j] == line[i - k])
                 {
-                    found = false;
-                    i += size - k - 1;
+                    i += size - k;
+                    return false;
                 }
-    }
+        i++;
+        return true;
+    };
+
+    int i = size;
+    while (i < line.length() && !check_unique(i))
+        ;
     cout << "round " << part << " result is " << i << endl;
 }
 
