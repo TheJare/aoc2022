@@ -17,7 +17,11 @@ static void part(span<string> args, int part)
         found = true;
         for (int j = 0; found && j < size - 1; j++)
             for (int k = j + 1; found && k < size; k++)
-                found = line[i - j] != line[i - k];
+                if (line[i - j] == line[i - k])
+                {
+                    found = false;
+                    i += size - k - 1;
+                }
     }
     cout << "round " << part << " result is " << i << endl;
 }
