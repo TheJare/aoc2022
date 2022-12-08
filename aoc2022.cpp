@@ -10,6 +10,7 @@ extern void day4(span<string> args);
 extern void day5(span<string> args);
 extern void day6(span<string> args);
 extern void day7(span<string> args);
+extern void day8(span<string> args);
 
 static function<void(span<string>)> days[] = {
     day_test,
@@ -20,6 +21,7 @@ static function<void(span<string>)> days[] = {
     day5,
     day6,
     day7,
+    day8,
     day_test,
 };
 
