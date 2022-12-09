@@ -40,8 +40,8 @@ static void part(span<string> args, int part)
                 Pos d{rope[knot].x - rope[knot + 1].x, rope[knot].y - rope[knot + 1].y};
                 if (d.x * d.x + d.y * d.y > 2)
                 {
-                    if (d.x != 0) rope[knot + 1].x += d.x / abs(d.x);
-                    if (d.y != 0) rope[knot + 1].y += d.y / abs(d.y);
+                    rope[knot + 1].x += (0 < d.x) - (d.x < 0);
+                    rope[knot + 1].y += (0 < d.y) - (d.y < 0);
                 }
             }
             trail.insert(rope[rope_tail]);
