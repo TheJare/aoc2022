@@ -17,7 +17,6 @@
 #include <cctype>
 #include <iterator>
 #include <unordered_set>
-#include <compare>
 
 // aliases & stuff
 
