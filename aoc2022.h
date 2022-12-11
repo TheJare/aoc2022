@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <deque>
 #include <algorithm>
 #include <ranges>
 #include <functional>
