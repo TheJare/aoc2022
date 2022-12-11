@@ -15,55 +15,36 @@ static void part(span<string> args, int part)
 {
     auto fn = args.empty() ? "data/day11.txt" : args[0].c_str();
     ifstream f(fn);
-
+    string input(istreambuf_iterator<char>{f}, {});
     vector<Monkey> monkeys;
     size_t totaldivisor = 1;
-    for (;;)
+
+    auto parserstr = R"(Monkey \d+:\n)"
+                     R"(  Starting items: ([\d\s,]*\d+)\n)"
+                     R"(  Operation: new = old ([\*\+]) (\w+)\n)"
+                     R"(  Test: divisible by (\d+)\n)"
+                     R"(    If true: throw to monkey (\d+)\n)"
+                     R"(    If false: throw to monkey (\d+))";
+    auto parser = regex(parserstr);
+
+    smatch match;
+    for (auto input_start = input.cbegin();
+         regex_search(input_start, input.cend(), match, parser);
+         input_start = match.suffix().first)
     {
-        Monkey m;
-        string line;
-        string dummy;
+        Monkey m{
+            .items{},
+            .op_is_add{match[2] == "+"},
+            .operand{(match[3] == "old") ? -1 : atoi(string(match[3]).c_str())},
+            .divider{atoi(string(match[4]).c_str())},
+        };
+        rs::for_each(rv::split(match[1].str(), string_view(", ")), [&m](auto item)
+                     { m.items.push_back(atoi(string(item.begin(), item.end()).c_str())); });
+        m.targets[0] = atoi(string(match[5]).c_str());
+        m.targets[1] = atoi(string(match[6]).c_str());
 
-        // Monkey header
-        if (!getline(f, line))
-            break;
-
-        // Starting items
-        getline(f, line);
-        auto sep = line.find(':');
-        istringstream ilitems(line.substr(sep));
-        for (int item; (ilitems >> dummy >> item) && !dummy.empty();)
-            m.items.push_back(item);
-
-        // Operation
-        getline(f, line);
-        sep = line.find('+');
-        m.op_is_add = (sep != string::npos);
-        if (!m.op_is_add)
-            sep = line.find('*');
-        istringstream ilop(line.substr(sep + 1));
-        ilop >> dummy;
-        m.operand = (dummy == "old") ? -1 : atoi(dummy.c_str());
-
-        // Test
-        getline(f, line);
-        sep = line.find("by");
-        istringstream iltest(line.substr(sep + 2));
-        iltest >> m.divider;
         totaldivisor *= m.divider;
-
-        // Throws
-        for (auto n = 0; n < 2; ++n)
-        {
-            getline(f, line);
-            auto sep = line.find("monkey");
-            istringstream iltarget(line.substr(sep + 6));
-            iltarget >> m.targets[n];
-        }
-
         monkeys.push_back(m);
-        if (!getline(f, line)) // empty line
-            break;
     }
 
     vector<size_t> inspections(monkeys.size());
