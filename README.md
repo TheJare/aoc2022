@@ -1,6 +1,6 @@
 # Advent of Code 2022
 
-Entries for [Advent of Code 2022] from Javier Arévalo
+Entries for [Advent of Code 2022](https://adventofcode.com/2022/) from Javier Arévalo
 
 I'm going to see if I do this in C++. I'll try to play with ranges and modern features,
 but not really aim to have a consistently good style.
