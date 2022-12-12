@@ -20,8 +20,14 @@ struct Node
 
 static void part(span<string> args, int part)
 {
-    auto fn = args.empty() ? "data/day12.txt" : args[0].c_str();
+    auto fn = args.empty() ? "data/input.txt" : args[0].c_str();
     ifstream f(fn);
+
+    auto cmp = [](const Node &lhs, const Node &rhs)
+    {
+        return lhs.heuristic > rhs.heuristic;
+    };
+    priority_queue<Node, vector<Node>, decltype(cmp)> open_list;
 
     Pos start, end;
     vector<string> map;
@@ -47,12 +53,28 @@ static void part(span<string> args, int part)
 
     vector<vector<int>> visited(h, vector<int>(w, w * h));
 
-    auto cmp = [](const Node &lhs, const Node &rhs)
+    if (part == 2)
     {
-        return lhs.heuristic > rhs.heuristic;
-    };
-    priority_queue<Node, vector<Node>, decltype(cmp)> open_list;
-    open_list.push(Node{start, 0, start.mdist(end)});
+        for (int y = 0; y < map.size(); ++y)
+        {
+            for (int x = 0; x < map[y].length(); ++x)
+            {
+                if (map[y][x] == 'a')
+                {
+                    Pos pos{x, y};
+                    Node node{pos, 0, pos.mdist(end)};
+                    open_list.push(node);
+                    visited[pos.y][pos.x] = node.heuristic;
+                }
+            }
+        }
+    }
+    else
+    {
+        Node node{start, 0, start.mdist(end)};
+        open_list.push(node);
+        visited[start.y][start.x] = node.heuristic;
+    }
     while (!open_list.empty())
     {
         Node cur = open_list.top();
@@ -69,7 +91,7 @@ static void part(span<string> args, int part)
             if (next.valid(w, h) && (map[next.y][next.x] <= curc + 1))
             {
                 int md = next.mdist(end);
-                int dist = ((part == 2 && curc == 'a') ? 0 : cur.dist) + 1;
+                int dist = cur.dist + 1;
                 int h = dist + md;
                 if (visited[next.y][next.x] > h)
                 {
