@@ -20,7 +20,7 @@ struct Node
 
 static void part(span<string> args, int part)
 {
-    auto fn = args.empty() ? "data/input.txt" : args[0].c_str();
+    auto fn = args.empty() ? "data/day12.txt" : args[0].c_str();
     ifstream f(fn);
 
     auto cmp = [](const Node &lhs, const Node &rhs)
