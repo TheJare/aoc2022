@@ -20,6 +20,7 @@
 #include <iterator>
 #include <unordered_set>
 #include <regex>
+#include <compare>
 
 // aliases & stuff
 
